@@ -59,7 +59,12 @@ function extractHistogramData(posts) {
             }
         });
 
-        histogramData = Object.entries(histogramData);
+        histogramData = Object.entries(histogramData).map(entry => {
+            const [currentMonth, postsCount] = entry;
+
+            const month = new Date(desiredYear, currentMonth).toLocaleString('default', { month: 'long' });
+            return [month, postsCount];
+        });
     }
 
     return histogramData;
