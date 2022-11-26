@@ -1,7 +1,8 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
+import environment from '../system/environment';
 
 const queryClient = new ApolloClient({
-    uri: process.env.REACT_APP_API_PATH,
+    uri: environment.API_PATH,
     cache: new InMemoryCache(),
 });
 
