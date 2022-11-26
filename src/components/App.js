@@ -2,6 +2,7 @@ import React from 'react';
 import { useQuery } from "@apollo/client";
 import queries from "../api/queries";
 import QueryStateHandler from './QueryStateHandler';
+import Histogram from './charts/Histogram';
 
 const desiredYear = 2019;
 function transformPosts(queryData) {
@@ -22,10 +23,8 @@ function transformPosts(queryData) {
                 }
 
                 return {
-                    ...post,
                     createdAt,
                 };
-
             })
             .filter(({ createdAt }) =>
                 createdAt !== null && createdAt.year === desiredYear
@@ -35,12 +34,54 @@ function transformPosts(queryData) {
     return posts;
 }
 
+function extractHistogramData(posts) {
+    let histogramData = null;
+
+    if (posts) {
+        histogramData = {
+            0: 0,
+            1: 0,
+            2: 0,
+            3: 0,
+            4: 0,
+            5: 0,
+            6: 0,
+            7: 0,
+            8: 0,
+            9: 0,
+            10: 0,
+            11: 0,
+        };
+
+        posts.forEach(({ createdAt: { month } }) => {
+            if (month in histogramData) {
+                histogramData[month] += 1;
+            }
+        });
+
+        histogramData = Object.entries(histogramData);
+    }
+
+    return histogramData;
+}
+
 function App() {
     const { loading, error, data } = useQuery(queries.allPosts);
 
-    const posts = React.useMemo(
-        () => transformPosts(data),
+    const histogramData = React.useMemo(
+        () => {
+            const posts = transformPosts(data);
+            return extractHistogramData(posts);
+        },
         [data]
+    );
+
+    const histogramAccessors = React.useMemo(
+        () => ({
+            xAccessor: item => item[0],
+            yAccessor: item => item[1],
+        }),
+        []
     );
 
     return (
@@ -51,7 +92,7 @@ function App() {
             errorComponent={<p>There has been an error fetching the data.</p>}
         >
             <h1>Posts-Charts</h1>
-            {posts?.map(({ id, createdAt: { year, month } }) => <p key={id}>{`Created at: ${month}.${year}`}</p>)}
+            <Histogram data={histogramData} accessors={histogramAccessors} />
         </QueryStateHandler>
     );
 }
