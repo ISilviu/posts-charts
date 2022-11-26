@@ -71,7 +71,12 @@ function extractHistogramData(posts) {
 }
 
 function App() {
-    const { loading, error, data } = useQuery(queries.allPosts);
+    const postsCount = 400;
+    const { loading, error, data } = useQuery(queries.allPosts, {
+        variables: {
+            count: postsCount,
+        },
+    });
 
     const histogramData = React.useMemo(
         () => {

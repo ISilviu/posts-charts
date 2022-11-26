@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client"
 
 const allPostsQuery = gql`
-    query {
-        allPosts(count: 200) {
+    query AllPosts($count: Int) {
+        allPosts(count: $count) {
             createdAt
         }
     }
