@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 
 const queryClient = new ApolloClient({
-    uri: 'https://fakerql.goosfraba.ro/graphql/',
+    uri: process.env.REACT_APP_API_PATH,
     cache: new InMemoryCache(),
 });
 
