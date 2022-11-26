@@ -27,7 +27,9 @@ function transformPosts(queryData) {
                 };
 
             })
-            .filter(({ createdAt }) => createdAt !== null && createdAt.year === desiredYear);
+            .filter(({ createdAt }) =>
+                createdAt !== null && createdAt.year === desiredYear
+            );
     }
 
     return posts;
