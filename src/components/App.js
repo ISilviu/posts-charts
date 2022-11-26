@@ -102,7 +102,12 @@ function App() {
             errorComponent={<p>There has been an error fetching the data.</p>}
         >
             <h1>Posts-Charts</h1>
-            <Histogram data={histogramData} accessors={histogramAccessors} />
+            <Histogram
+                data={histogramData}
+                accessors={histogramAccessors}
+                yAxisLabel="Number of posts"
+                xAxisLabel="Month"
+            />
         </QueryStateHandler>
     );
 }
