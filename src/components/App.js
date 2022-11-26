@@ -6,7 +6,7 @@ import Histogram from './charts/Histogram';
 import { extractHistogramData, transformPosts } from '../data/posts';
 
 function App() {
-    const postsCount = 5;
+    const postsCount = 400;
     const { loading, error, data } = useQuery(queries.allPosts, {
         variables: {
             count: postsCount,
