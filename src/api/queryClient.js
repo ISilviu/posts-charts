@@ -1,7 +1,8 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
+import environment from '../system/environment';
 
 const queryClient = new ApolloClient({
-    uri: 'https://fakerql.goosfraba.ro/graphql/',
+    uri: environment.API_PATH,
     cache: new InMemoryCache(),
 });
 
